@@ -1,5 +1,5 @@
 from pytest import fixture
-from thycotic import thycotic
+import thycotic
 import os
 import vcr
 
@@ -16,7 +16,7 @@ def token_keys():
 
 @vcr.use_cassette("tests/vcr_cassette/get_token")
 def test_get_token(token_keys):
-    ss = thycotic(username, password, url)
+    ss = thycotic.Api(username, password, url)
     response = ss._get_token()
     assert isinstance(response.json(), dict)
     assert set(token_keys).issubset(response.json())
