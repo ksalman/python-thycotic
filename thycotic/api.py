@@ -57,17 +57,35 @@ class Api:
             "skip": skip,
             "take": take,
         }
-        return self._get(self._geturl(endpoint), params=params)
+        return self._get(self._geturl(endpoint), endpoint=endpoint, params=params)
 
     def _get(self, url, **kwargs):
         return self._internal_call("GET", url, kwargs)
 
     def _internal_call(self, method, url, params):
+        endpoint = params.pop("endpoint")
         args = dict(params=params)
         args["params"] = args["params"]["params"]
         response = self._session.request(method, url, **args)
         response.raise_for_status()
-        return response.json()
+        mydict = response.json()
+        mydict["endpoint"] = endpoint
+        return mydict
 
     def _geturl(self, endpoint):
         return urljoin(self.url, API_URI) + endpoint
+
+    def next(self, result):
+        """Helper method to handle pagination"""
+
+        if not ("endpoint" or "filter") in result:
+            return None
+        if result["hasNext"] == False:
+            return None
+        endpoint = result["endpoint"]
+        params = {}
+        for k in result["filter"]:
+            params[f"filter.{k}"] = result["filter"][k]
+        params["skip"] = result["skip"] + result["take"]
+        params["take"] = result["take"]
+        return self._get(self._geturl(endpoint), endpoint=endpoint, params=params)
