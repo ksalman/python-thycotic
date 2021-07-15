@@ -23,6 +23,7 @@ class Api:
             "grant_type": "password",
         }
         response = requests.post(TOKEN_URL, data=payload, verify=False)
+        response.raise_for_status()
         self._set_headers(response)
         return response
 
