@@ -126,3 +126,14 @@ class Api:
         endpoint = "/folders/{}".format(id)
         params = {"getAllChildren": getchildren}
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def folder_audit(self, id, limit=10):
+        """Retrieve a list of audits for folder by ID
+
+        :params id: Folder ID
+        :returns: PagingOfFolderAuditSummary
+        """
+
+        endpoint = "/folders/{}/audit".format(id)
+        params = {"take": limit}
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
