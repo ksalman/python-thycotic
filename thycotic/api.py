@@ -15,6 +15,7 @@ class Api:
         self.url = url
         self._session = requests.Session()
         self._session.verify = verify
+        self._token = None
 
     def auth(self):
         TOKEN_URL = urljoin(self.url, self.REQUEST_TOKEN_URI)
@@ -25,9 +26,9 @@ class Api:
         }
         response = requests.post(TOKEN_URL, data=payload, verify=False)
         response.raise_for_status()
-        ACCESS_TOKEN = response.json()["access_token"]
+        self._token = response.json()
         self._session.headers.update(
-            {"Authorization": "Bearer {}".format(ACCESS_TOKEN)}
+            {"Authorization": "Bearer {}".format(self._token["access_token"])}
         )
 
     def get_folders(
