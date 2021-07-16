@@ -104,3 +104,13 @@ class Api:
             "take": limit,
         }
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def get_folder_stub(self):
+        """Return the default values for a new secret folder
+
+        :returns: FolderModel
+        """
+
+        endpoint = "/folders/stub"
+        params = {}
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
