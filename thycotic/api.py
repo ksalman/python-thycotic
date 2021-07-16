@@ -160,3 +160,13 @@ class Api:
             "take": limit,
         }
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def get_favorite_secrets(self):
+        """Returns a list of secrets which the user has favorited
+
+        :returns: WidgetSecretModel
+        """
+
+        endpoint = "/secrets/favorite"
+        params = {}
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
