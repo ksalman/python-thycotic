@@ -12,11 +12,11 @@ class Api:
         self.username = username
         self.password = password
         self.url = url
-        self.verify = verify
-        self._get_token()
+        self._session = requests.Session()
+        self._session.verify = verify
 
-    def _get_token(self):
-        TOKEN_URL = urljoin(self.url, REQUEST_TOKEN_URI)
+    def auth(self):
+        TOKEN_URL = urljoin(self.url, self.REQUEST_TOKEN_URI)
         payload = {
             "username": self.username,
             "password": self.password,
@@ -24,15 +24,10 @@ class Api:
         }
         response = requests.post(TOKEN_URL, data=payload, verify=False)
         response.raise_for_status()
-        self._set_headers(response)
-        return response
-
-    def _set_headers(self, response):
-        s = requests.Session()
         ACCESS_TOKEN = response.json()["access_token"]
-        s.headers.update({"Authorization": "Bearer {}".format(ACCESS_TOKEN)})
-        self._session = s
-        self._session.verify = self.verify
+        self._session.headers.update(
+            {"Authorization": "Bearer {}".format(ACCESS_TOKEN)}
+        )
 
     def get_folders(
         self, parentfolder=None, permissionrequired="View", skip=None, take=None
