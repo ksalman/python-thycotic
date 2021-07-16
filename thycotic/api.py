@@ -137,3 +137,26 @@ class Api:
         endpoint = "/folders/{}/audit".format(id)
         params = {"take": limit}
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def search_secrets(
+        self, folderid=None, includesubfolders=None, heartbeatstatus=None, limit=10
+    ):
+        """Search, filter, sort, and page secrets
+
+        :params folderid: (optional) Return only secrets within a certain folder
+        :params includesubfolders: (optional) Whether to include secrets in subfolders of the
+            specified folder
+        :param heartbeatstatus: Return only secrets with a certain heartbeat status
+        :params limit: (optional) Maximum number of records to include in results
+            Default is 10
+        :returns: PagingOfSecretSummary
+        """
+
+        endpoint = "/secrets"
+        params = {
+            "filter.folderId": folderid,
+            "filter.includeSubFolders": includesubfolders,
+            "filter.heartbeatStatus": heartbeatstatus,
+            "take": limit,
+        }
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
