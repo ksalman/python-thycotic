@@ -73,3 +73,34 @@ class Api:
 
     def _geturl(self, endpoint):
         return urljoin(self.url, self.API_URI) + endpoint
+
+    def lookup_folders(
+        self,
+        foldertypeid=None,
+        parentfolder=None,
+        permissionrequired="View",
+        searchtext=None,
+        limit=10,
+    ):
+        """Search, filter, sort, and page secret folders, returning only folder ID and name
+
+        :param foldertypeid: (optional) Folder type ID
+        :param parantfolder: (optional) Parent folder ID
+        :param permissionrequired: (optional) Specify whether to filter by Owner, Edit,
+            AddSecret, View folder permission. Default is View
+        :param searchtext: (optional) Search text
+        :param limit: (optional) Maximum number of records to include in results.
+            Default is 10
+        :returns: PagingOfFolderLookup
+
+        """
+
+        endpoint = "/folders/lookup"
+        params = {
+            "filter.folderTypeId": foldertypeid,
+            "filter.parentFolderId": parentfolder,
+            "filter.permissionRequired": permissionrequired,
+            "filter.searchText": searchtext,
+            "take": limit,
+        }
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
