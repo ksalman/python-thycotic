@@ -31,7 +31,7 @@ class Api:
             {"Authorization": "Bearer {}".format(self._token["access_token"])}
         )
 
-    def get_folders(
+    def search_folders(
         self,
         foldertypeid=None,
         parentfolder=None,

@@ -63,10 +63,10 @@ def PagingOfFolderPermissionSummary():
     }
 
 
-def test_mock_get_folder(requests_mock, PagingOfFolderPermissionSummary):
+def test_mock_search_folders(requests_mock, PagingOfFolderPermissionSummary):
     ss = thycotic.Api(MOCKUSER, MOCKPASS, MOCKURL)
     requests_mock.get(ss.API_URI + "/folders", json=PagingOfFolderPermissionSummary)
-    resp = ss.get_folders()
+    resp = ss.search_folders()
     assert isinstance(resp, dict)
     assert isinstance(resp["records"], list)
     assert 1234 == resp["filter"]["parentFolderId"]
