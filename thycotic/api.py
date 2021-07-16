@@ -114,3 +114,15 @@ class Api:
         endpoint = "/folders/stub"
         params = {}
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def get_folder(self, id, getchildren=False):
+        """Get a single folder by ID
+
+        :params id: Folder ID
+        :params getchildren: Whether to retrieve all child folders of the requested folder
+        :returns: FolderModel
+        """
+
+        endpoint = "/folders/{}".format(id)
+        params = {"getAllChildren": getchildren}
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
