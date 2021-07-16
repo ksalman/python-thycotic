@@ -1,13 +1,14 @@
 import requests
 from urllib.parse import urljoin
 
-REQUEST_TOKEN_URI = "/SecretServer/oauth2/token"
-API_URI = "/SecretServer/api/v1"
 
 from thycotic import Folder
 
 
 class Api:
+    REQUEST_TOKEN_URI = "/SecretServer/oauth2/token"
+    API_URI = "/SecretServer/api/v1"
+
     def __init__(self, username, password, url, verify=True):
         self.username = username
         self.password = password
@@ -69,7 +70,7 @@ class Api:
         return mydict
 
     def _geturl(self, endpoint):
-        return urljoin(self.url, API_URI) + endpoint
+        return urljoin(self.url, self.API_URI) + endpoint
 
     def next(self, result):
         """Helper method to handle pagination"""
