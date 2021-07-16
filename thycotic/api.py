@@ -31,15 +31,24 @@ class Api:
             {"Authorization": "Bearer {}".format(self._token["access_token"])}
         )
 
-    def get_folders(self, parentfolder=None, permissionrequired="View", limit=10):
+    def get_folders(
+        self,
+        foldertypeid=None,
+        parentfolder=None,
+        permissionrequired="View",
+        searchtext=None,
+        limit=10,
+    ):
         """Search, filter, sort, and page secret folders
 
         The caller is responsible for handling pages and looping to gather all
         of the data
 
+        :param foldertypeid: (optional) Folder type ID
         :param parantfolder: (optional) Parent folder ID
         :param permissionrequired: (optional) Specify whether to filter by Owner, Edit,
             AddSecret, View folder permission. Default is View
+        :param searchtext: (optional) Search text
         :param limit: (optional) Maximum number of records to include in results.
             Default is 10
         :returns: PagingOfFolderSummary
@@ -48,8 +57,10 @@ class Api:
 
         endpoint = "/folders"
         params = {
+            "filter.folderTypeId": foldertypeid,
             "filter.parentFolderId": parentfolder,
             "filter.permissionRequired": permissionrequired,
+            "filter.searchText": searchtext,
             "take": limit,
         }
         return self._internal_call("GET", self._geturl(endpoint), params=params)
