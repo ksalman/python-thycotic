@@ -210,3 +210,14 @@ class Api:
             "take": limit,
         }
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def lookup_secret_by_id(self, id):
+        """Look up secret by ID and return secret name and ID
+
+        :params id: Secret ID
+        :returns: SecretLookup
+        """
+
+        endpoint = "/secrets/lookup/{}".format(id)
+        params = {}
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
