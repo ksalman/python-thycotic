@@ -171,7 +171,7 @@ class Api:
         params = {}
         return self._internal_call("GET", self._geturl(endpoint), params=params)
 
-    def lookup_secretes(
+    def lookup_secrets(
         self,
         folderid=None,
         heartbeatstatus=None,
