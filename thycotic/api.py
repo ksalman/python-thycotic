@@ -170,3 +170,43 @@ class Api:
         endpoint = "/secrets/favorite"
         params = {}
         return self._internal_call("GET", self._geturl(endpoint), params=params)
+
+    def lookup_secretes(
+        self,
+        folderid=None,
+        heartbeatstatus=None,
+        includerestricted=None,
+        includesubfolders=None,
+        onlysharedwithme=None,
+        permissionrequired=None,
+        searchtext=None,
+        limit=None,
+    ):
+        """Search, filter, sort, and page secrets, returning only secret ID and name
+
+        :params folderid: (optional) Return only secrets within a certain folder
+        :params heartbeatstatus: (optional) Return only secrets with a certain heartbeat status
+        :params includerestricted: (optional) Whether to include restricted secrets in results
+        :params includesubfolders: (optional) Whether to include secrets in subfolders
+            of the specified folder
+        :params onlysharedwithme: (optional) When true only Secrets where you are not
+            the owner and the Secret was shared explicitly with your user id will be returned
+        :params permissionrequired: (optional) Specify whether to filter by List, View,
+            Edit, or Owner permission. Default is List. (List = 1, View = 2, Edit = 3, Owner = 4
+        :params searchtext: (optional) Search text
+        :params limit: (optional) Maximum number of records to include in results
+        :returns: PagingOfSecretLookup
+        """
+
+        endpoint = "/secrets/lookup"
+        params = {
+            "filter.folderId": folderid,
+            "filter.heartbeatStatus": heartbeatstatus,
+            "filter.includeRestricted": includerestricted,
+            "filter.includeSubFolders": includesubfolders,
+            "filter.onlySharedWithMe": onlysharedwithme,
+            "filter.permissionRequired": permissionrequired,
+            "filter.searchText": searchtext,
+            "take": limit,
+        }
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
