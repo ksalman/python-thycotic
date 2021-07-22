@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="python_thycotic",
-    version="0.1",
+    version="0.0.1",
     description="Python wrapper for Thycotic Secret Server API",
     url="https://github.com/ksalman/python_thycotic",
     author="Kashif Salman",
