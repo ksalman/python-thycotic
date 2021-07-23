@@ -1,4 +1,28 @@
 # Python Thycotic
-This is a Python wrapper for [Thycotic Secret Server API](https://updates.thycotic.net/secretserver/restapiguide/10.9/TokenAuth/)
+This is a Python wrapper for Thycotic Secret Server API version 10.9.
 
-My plan is to first write the methods for the GET requests for all the endpoints, or whatever endpoints I have access to. I won't necessarily add all the request parameters for each request but they are easy to add later.
+## Install
+```shell
+pip install python_thycotic
+```
+
+## Usage
+You will need to the username, password, and Thycotic Secret Server URL to instantiate the class.
+```python
+import os, thycotic
+ss = thycotic.Api(
+    os.environ.get("THYCOTIC_USER"),
+    os.environ.get("THYCOTIC_PASS"),
+    os.environ.get("THYCOTIC_URL"),
+)
+```
+
+Get an access token, which is used to make API calls
+```python
+ss.auth()
+```
+
+Get a secret by id
+```python
+secret = ss.get_secret(123)
+```
