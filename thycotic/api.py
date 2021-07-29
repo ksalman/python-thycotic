@@ -239,3 +239,20 @@ class Api:
 
         endpoint = "/secrets/{}".format(id)
         return self._internal_call("GET", self._geturl(endpoint))
+
+    def create_folder(self, name, parentfolderid, type=1):
+        """Create a new folder
+
+        :params name: Folder name
+        :params parentfolderid: Parent folder ID
+        :params type: (optional) Folder type ID. Default is 1
+        :returns: FolderModel
+        """
+
+        endpoint = "/folders"
+        data = {
+            "folderName": name,
+            "folderTypeId": type,
+            "parentFolderId": parentfolderid,
+        }
+        return self._internal_call("POST", self._geturl(endpoint), payload=data)
