@@ -114,8 +114,7 @@ class Api:
         """
 
         endpoint = "/folders/stub"
-        params = {}
-        return self._internal_call("GET", self._geturl(endpoint), params=params)
+        return self._internal_call("GET", self._geturl(endpoint))
 
     def get_folder(self, id, getchildren=False):
         """Get a single folder by ID
@@ -170,8 +169,7 @@ class Api:
         """
 
         endpoint = "/secrets/favorite"
-        params = {}
-        return self._internal_call("GET", self._geturl(endpoint), params=params)
+        return self._internal_call("GET", self._geturl(endpoint))
 
     def lookup_secrets(
         self,
@@ -221,8 +219,7 @@ class Api:
         """
 
         endpoint = "/secrets/lookup/{}".format(id)
-        params = {}
-        return self._internal_call("GET", self._geturl(endpoint), params=params)
+        return self._internal_call("GET", self._geturl(endpoint))
 
     def get_secret_stub(self):
         """Return the default values for a new secret
@@ -231,8 +228,7 @@ class Api:
         """
 
         endpoint = "/secrets/stub"
-        params = {}
-        return self._internal_call("GET", self._geturl(endpoint), params=params)
+        return self._internal_call("GET", self._geturl(endpoint))
 
     def get_secret(self, id):
         """Get a single secret by ID
@@ -242,5 +238,4 @@ class Api:
         """
 
         endpoint = "/secrets/{}".format(id)
-        params = {}
-        return self._internal_call("GET", self._geturl(endpoint), params=params)
+        return self._internal_call("GET", self._geturl(endpoint))
