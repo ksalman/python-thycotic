@@ -65,8 +65,10 @@ class Api:
         }
         return self._internal_call("GET", self._geturl(endpoint), params=params)
 
-    def _internal_call(self, method, url, params):
+    def _internal_call(self, method, url, params=None, payload=None):
         args = dict(params=params)
+        if payload:
+            args["data"] = payload
         response = self._session.request(method, url, **args)
         response.raise_for_status()
         return response.json()
