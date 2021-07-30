@@ -221,14 +221,17 @@ class Api:
         endpoint = "/secrets/lookup/{}".format(id)
         return self._internal_call("GET", self._geturl(endpoint))
 
-    def get_secret_stub(self):
+    def get_secret_stub(self, folderid, templateid):
         """Return the default values for a new secret
 
+        :params folderid: Containing folder ID
+        :params templateid: Secret template ID
         :returns: SecretModel
         """
 
         endpoint = "/secrets/stub"
-        return self._internal_call("GET", self._geturl(endpoint))
+        params = {"secretTemplateId": templateid, "folderId": folderid}
+        return self._internal_call("GET", self._geturl(endpoint), params=params)
 
     def get_secret(self, id):
         """Get a single secret by ID
