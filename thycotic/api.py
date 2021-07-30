@@ -24,9 +24,7 @@ class Api:
             "password": self.password,
             "grant_type": "password",
         }
-        response = requests.post(TOKEN_URL, data=payload, verify=False)
-        response.raise_for_status()
-        self._token = response.json()
+        self._token = self._internal_call("POST", TOKEN_URL, payload=payload)
         self._session.headers.update(
             {"Authorization": "Bearer {}".format(self._token["access_token"])}
         )
