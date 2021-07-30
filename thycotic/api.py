@@ -14,6 +14,7 @@ class Api:
         self.password = password
         self.url = url
         self._session = requests.Session()
+        self._session.headers.update({"Content-Type": "application/json"})
         self._session.verify = verify
         self._token = None
 
