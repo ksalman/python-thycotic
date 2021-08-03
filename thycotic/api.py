@@ -9,10 +9,11 @@ class Api:
     REQUEST_TOKEN_URI = "/SecretServer/oauth2/token"
     API_URI = "/SecretServer/api/v1"
 
-    def __init__(self, username, password, url, verify=True):
+    def __init__(self, username, password, url, timeout=5, verify=True):
         self.username = username
         self.password = password
         self.url = url
+        self.timeout = timeout
         self._session = requests.Session()
         self._session.headers.update({"Content-Type": "application/json"})
         self._session.verify = verify
@@ -68,7 +69,7 @@ class Api:
         args = dict(params=params)
         if payload:
             args["data"] = payload
-        response = self._session.request(method, url, **args)
+        response = self._session.request(method, url, timeout=self.timeout, **args)
         response.raise_for_status()
         return response.json()
 
